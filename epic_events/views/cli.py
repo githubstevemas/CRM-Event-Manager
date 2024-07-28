@@ -34,7 +34,10 @@ def display_employees():
     employees = session.query(Employee).all()
 
     for employee in employees:
-        print(f"ID: {employee.id}, Name: {employee.first_name} {employee.last_name}, Email: {employee.email}, Department: {employee.department}")
+        print(f"ID: {employee.id}, "
+              f"Name: {employee.first_name} {employee.last_name}, "
+              f"Email: {employee.email}, "
+              f"Department: {employee.department}")
 
 
 main_menu()

@@ -16,6 +16,10 @@ class Client(Base):
     email = Column("email", String)
     phone = Column("phone", Integer)
     company_name = Column("company_name", String)
-    first_contact_date = Column("first_contact_date", DateTime, default=datetime.now())
+    first_contact_date = Column(
+        "first_contact_date",
+        DateTime,
+        default=datetime.now()
+    )
     last_update = Column("last_update", DateTime)
     commercial_id = Column("commercial_id", String)

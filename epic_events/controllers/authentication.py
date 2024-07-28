@@ -1,4 +1,4 @@
-from argon2 import PasswordHasher, exceptions
+from argon2 import PasswordHasher
 from sqlalchemy.orm import Session
 
 from epic_events.models.employee import Employee
