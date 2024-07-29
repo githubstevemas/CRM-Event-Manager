@@ -1,15 +1,23 @@
-from sqlalchemy import Column, Integer, String
+import enum
+
+from sqlalchemy import Column, Integer, String, Enum
 
 from config import Base
+
+
+class DepartmentType(enum.Enum):
+    management = "management"
+    commercial = "commercial"
+    support = "support"
 
 
 class Employee(Base):
     __tablename__ = 'employee'
 
-    id = Column("id", Integer, primary_key=True)
-    password = Column("password", String)
-    first_name = Column("first_name", String)
-    last_name = Column("last_name", String)
-    email = Column("email", String)
-    phone = Column("phone", Integer)
-    department = Column("department", String)
+    id = Column(Integer, primary_key=True, index=True)
+    password = Column(String(255), nullable=False)
+    first_name = Column(String(100), nullable=False)
+    last_name = Column(String(100), nullable=False)
+    email = Column(String(255), unique=True, nullable=False)
+    phone = Column(String(20), nullable=False)
+    department = Column(Enum(DepartmentType), nullable=False)

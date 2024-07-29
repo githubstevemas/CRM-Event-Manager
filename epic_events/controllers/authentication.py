@@ -7,7 +7,8 @@ ph = PasswordHasher()
 
 
 def hash_password(password):
-    # Return an hashed and salted password with argon2
+    # Return hashed and salted password with argon2
+
     return ph.hash(password)
 
 
@@ -21,6 +22,8 @@ def register(first_name: str,
 
     # Hash & salt password and create Employee instance
     hashed_password = hash_password(password)
+
+    print(f"Registering user with hashed password: {hashed_password}")
     new_employee = Employee(first_name=first_name,
                             last_name=last_name,
                             password=hashed_password,

@@ -2,3 +2,4 @@
 .env
 .idea
 /flake8-report
+__pycache__/
