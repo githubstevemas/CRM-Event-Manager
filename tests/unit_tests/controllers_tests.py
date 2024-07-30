@@ -1,6 +1,6 @@
 from sqlalchemy import inspect
 
-from epic_events.controllers.authentication import register
+from epic_events.controllers.authentication import register, is_email_exists
 
 
 def test_db_connection(engine):
@@ -18,8 +18,14 @@ def test_register_employee(db):
                              password_test,
                              "test@epic-events.com",
                              "+33531313131",
-                             "management",
+                             "3",
                              db)
 
     assert register_test.first_name == "john"
     assert register_test.password != password_test
+
+
+def test_is_email_exists():
+
+    email_test = "mas.ste"
+    assert is_email_exists(email_test)

@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 
 from epic_events.models.employee import Employee
 
+from config import session
+
 ph = PasswordHasher()
 
 
@@ -23,7 +25,6 @@ def register(first_name: str,
     # Hash & salt password and create Employee instance
     hashed_password = hash_password(password)
 
-    print(f"Registering user with hashed password: {hashed_password}")
     new_employee = Employee(first_name=first_name,
                             last_name=last_name,
                             password=hashed_password,
@@ -35,3 +36,11 @@ def register(first_name: str,
     db.add(new_employee)
     db.commit()
     return new_employee
+
+
+def is_email_exists(email):
+
+    exists_query = session.query(Employee.id).filter_by(email=email).exists()
+    result = session.query(exists_query).scalar()
+
+    return result
