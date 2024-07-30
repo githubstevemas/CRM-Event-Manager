@@ -1,6 +1,6 @@
 from config import session
 from epic_events.controllers.authentication import register
-from epic_events.models.employee import Employee, DepartmentType
+from epic_events.models.employee import Employee
 
 
 def main_menu():
@@ -17,17 +17,17 @@ def main_menu():
 def get_department():
     # Get department user choice
 
-    print("Select department :\n")
+    print("Select department number :\n")
     print("[1] Management")
     print("[2] Commercial")
     print("[3] Support")
     choice = input("\nYour choice ? ")
     if choice == '1':
-        return DepartmentType.management
+        return "1"
     elif choice == '2':
-        return DepartmentType.commercial
+        return "2"
     elif choice == '3':
-        return DepartmentType.support
+        return "3"
     else:
         print("Invalid choice. Please try again.")
         return get_department()
@@ -41,14 +41,14 @@ def register_employee():
     password = input("Password ? ")
     email = input("Email ? ").lower()
     phone = input("Phone number ? ")
-    department = get_department()
+    role_id = get_department()
 
     register(first_name,
              last_name,
              password,
              email,
              phone,
-             department,
+             role_id,
              session)
 
 
@@ -59,7 +59,7 @@ def display_employees():
         print(f"ID: {employee.id}, "
               f"Name: {employee.first_name} {employee.last_name}, "
               f"Email: {employee.email}, "
-              f"Department: {employee.department.value}")
+              f"Department: {employee.role_id.value}")
 
 
 main_menu()

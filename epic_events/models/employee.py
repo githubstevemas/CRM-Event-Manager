@@ -1,14 +1,16 @@
-import enum
-
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 from config import Base
 
 
-class DepartmentType(enum.Enum):
-    management = "management"
-    commercial = "commercial"
-    support = "support"
+class EmployeeRole(Base):
+    __tablename__ = 'employee_role'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), unique=True, nullable=False)
+
+    employees = relationship('Employee', back_populates='role')
 
 
 class Employee(Base):
@@ -20,4 +22,6 @@ class Employee(Base):
     last_name = Column(String(100), nullable=False)
     email = Column(String(255), unique=True, nullable=False)
     phone = Column(String(20), nullable=False)
-    department = Column(Enum(DepartmentType), nullable=False)
+    role_id = Column(Integer, ForeignKey('employee_role.id'), nullable=False)
+
+    role = relationship('EmployeeRole', back_populates='employees')

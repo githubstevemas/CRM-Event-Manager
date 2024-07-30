@@ -17,7 +17,7 @@ def register(first_name: str,
              password: str,
              email: str,
              phone: str,
-             department: str,
+             role_id: str,
              db: Session):
 
     # Hash & salt password and create Employee instance
@@ -29,7 +29,7 @@ def register(first_name: str,
                             password=hashed_password,
                             email=email,
                             phone=phone,
-                            department=department)
+                            role_id=role_id)
 
     # Add new_employee to the db
     db.add(new_employee)
