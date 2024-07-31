@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from config import Base
+from epic_events.models.token import Token
 
 
 class EmployeeRole(Base):
@@ -25,3 +26,4 @@ class Employee(Base):
     role_id = Column(Integer, ForeignKey('employee_role.id'), nullable=False)
 
     role = relationship('EmployeeRole', back_populates='employees')
+    token = relationship('Token', order_by=Token.id, back_populates='employee')
