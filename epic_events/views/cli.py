@@ -1,3 +1,5 @@
+import getpass
+
 from config import session
 from epic_events.controllers.authentication import register
 from epic_events.models.employee import Employee
@@ -58,8 +60,11 @@ def display_employees():
     for employee in employees:
         print(f"ID: {employee.id}, "
               f"Name: {employee.first_name} {employee.last_name}, "
+              f"Password: {employee.password}"
               f"Email: {employee.email}, "
-              f"Department: {employee.role_id.value}")
+              f"Department: {employee.role_id}")
 
 
-main_menu()
+def ask_password():
+
+    return getpass.getpass("Please enter your password : ")

@@ -1,8 +1,6 @@
 import argparse
-import getpass
 
-from epic_events.controllers.authentication import is_email_exists, \
-    create_encrypted_token
+from epic_events.controllers.authentication import main_login
 
 
 def main():
@@ -11,16 +9,7 @@ def main():
     parser.add_argument('email', type=str, help="User's email")
     args = parser.parse_args()
 
-    exists = is_email_exists(args.email)
-
-    if exists:
-        print(f"Please enter your password : ")
-        password = getpass.getpass("")
-
-        create_encrypted_token(args.email)
-
-    else:
-        print("Wrong email.")
+    main_login(args)
 
 
 if __name__ == "__main__":
