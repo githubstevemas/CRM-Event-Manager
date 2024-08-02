@@ -1,7 +1,8 @@
 import argparse
 import getpass
 
-from epic_events.controllers.authentication import is_email_exists
+from epic_events.controllers.auth_controller import is_email_exists
+from epic_events.controllers.user_controller import main_menu
 
 
 def main():
@@ -19,6 +20,8 @@ def main():
         password = getpass.getpass("")
     else:
         print("Wrong email.")
+
+    main_menu()
 
 
 if __name__ == "__main__":

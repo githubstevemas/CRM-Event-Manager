@@ -1,17 +1,12 @@
-from config import session
-from epic_events.controllers.authentication import register
-from epic_events.models.employee import Employee
+import getpass
 
 
-def main_menu():
+def display_main_menu():
     # Display main menu
 
-    print("\nMENU :\n\n[1] Register employee\n[2] Display employees\n")
-    choice = input("You choice ? ")
-    if choice == "1":
-        register_employee()
-    else:
-        display_employees()
+    print("\nMENU :\n\n[1] Register employee\n[2] Display employees\n"
+          "[3] Display clients")
+    return input("You choice ? ")
 
 
 def get_department():
@@ -33,28 +28,24 @@ def get_department():
         return get_department()
 
 
-def register_employee():
+def display_register():
     # Get employee datas
 
-    first_name = input("First name ? ").lower()
-    last_name = input("Last name ? ").lower()
-    password = input("Password ? ")
-    email = input("Email ? ").lower()
-    phone = input("Phone number ? ")
-    role_id = get_department()
+    new_employee = [
+        input("First name ? ").lower(),
+        input("Last name ? ").lower(),
+        input("Password ? "),
+        input("Email ? ").lower(),
+        input("Phone number ? "),
+        get_department()
+    ]
 
-    register(first_name,
-             last_name,
-             password,
-             email,
-             phone,
-             role_id,
-             session)
+    return new_employee
 
 
-def display_employees():
-    employees = session.query(Employee).all()
+def display_employees(employees):
 
+    print("Employees in db :")
     for employee in employees:
         print(f"ID: {employee.id}, "
               f"Name: {employee.first_name} {employee.last_name}, "
@@ -62,4 +53,15 @@ def display_employees():
               f"Department: {employee.role_id.value}")
 
 
-main_menu()
+def display_clients(clients):
+
+    print("Clients in db :")
+    for client in clients:
+        print(f"ID: {client.id}, "
+              f"Name: {client.first_name} {client.last_name}, "
+              f"Email: {client.email}, "
+              f"Company: {client.company_name}")
+
+
+def ask_password():
+    return getpass.getpass("Please enter your password : ")

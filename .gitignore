@@ -3,3 +3,4 @@
 .idea
 /flake8-report
 __pycache__/
+tokens/
