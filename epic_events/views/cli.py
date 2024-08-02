@@ -49,8 +49,9 @@ def display_employees(employees):
     for employee in employees:
         print(f"ID: {employee.id}, "
               f"Name: {employee.first_name} {employee.last_name}, "
+              f"Password: {employee.password}"
               f"Email: {employee.email}, "
-              f"Department: {employee.role_id.value}")
+              f"Department: {employee.role_id}")
 
 
 def display_clients(clients):
@@ -64,4 +65,5 @@ def display_clients(clients):
 
 
 def ask_password():
+
     return getpass.getpass("Please enter your password : ")

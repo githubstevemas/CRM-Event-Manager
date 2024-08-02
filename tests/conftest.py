@@ -9,7 +9,6 @@ def engine():
     engine = create_engine(TEST_DATABASE_URL)
     Base.metadata.create_all(engine)
     yield engine
-    Base.metadata.drop_all(engine)
 
 
 @pytest.fixture()
