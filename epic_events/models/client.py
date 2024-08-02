@@ -9,17 +9,12 @@ Base = declarative_base()
 class Client(Base):
     __tablename__ = 'client'
 
-    id = Column("id", Integer, primary_key=True)
-    password = Column("password", String)
-    first_name = Column("first_name", String)
-    last_name = Column("last_name", String)
-    email = Column("email", String)
-    phone = Column("phone", Integer)
-    company_name = Column("company_name", String)
-    first_contact_date = Column(
-        "first_contact_date",
-        DateTime,
-        default=datetime.now()
-    )
-    last_update = Column("last_update", DateTime)
-    commercial_id = Column("commercial_id", String)
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String(255), nullable=False)
+    last_name = Column(String(255), nullable=False)
+    email = Column(String(255), nullable=False)
+    phone = Column(String(20), nullable=False)
+    company_name = Column(String(255), nullable=False)
+    first_contact = Column(DateTime, default=datetime.now())
+    last_update = Column(DateTime)
+    commercial_id = Column(String(255), nullable=False)
