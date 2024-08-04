@@ -1,7 +1,7 @@
 import argparse
 
 from epic_events.controllers.user_controller import main_menu
-from epic_events.controllers.authentication import main_login
+from epic_events.controllers.auth_controller import main_login
 
 
 def main():

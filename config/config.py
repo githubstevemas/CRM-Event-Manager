@@ -22,9 +22,9 @@ DATABASE_URL = \
 TEST_DATABASE_URL = \
     f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{TEST_DB}"
 
-engine = create_engine(DATABASE_URL, echo=True)
+main_engine = create_engine(DATABASE_URL, echo=True)
 
 # Get tables and create session
 Base = declarative_base()
-Session = sessionmaker(bind=engine)
-session = Session()
+SessionFactory = sessionmaker(bind=main_engine)
+global_db_session = SessionFactory()
