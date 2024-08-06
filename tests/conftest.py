@@ -2,6 +2,7 @@ import pytest
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from config.config import TEST_DATABASE_URL, Base
+from epic_events.controllers.auth_controller import hash_password
 
 
 @pytest.fixture(scope="session")
@@ -29,6 +30,64 @@ def db_session(TestSessionFactory):
 def override_global_db_session(db_session):
     global global_db_session
     global_db_session = db_session
+
+
+@pytest.fixture()
+def insert_test_employee(db_session):
+    def insert(email, password, first_name, last_name, phone, role_id):
+        hashed_password = hash_password(password)
+        db_session.execute(
+            text(
+                "INSERT INTO employee ("
+                "email, "
+                "password, "
+                "first_name, "
+                "last_name, "
+                "phone, "
+                "role_id) "
+                "VALUES ("
+                ":email, "
+                ":password, "
+                ":first_name, "
+                ":last_name, "
+                ":phone, "
+                ":role_id)"),
+            {"email": email, "password": hashed_password,
+             "first_name": first_name, "last_name": last_name,
+             "phone": phone, "role_id": role_id}
+        )
+        db_session.commit()
+
+    return insert
+
+
+@pytest.fixture()
+def insert_test_client(db_session):
+    def insert(first_name, last_name, email, phone, company_name,
+               commercial_id):
+        db_session.execute(
+            text(
+                "INSERT INTO client ("
+                "first_name, "
+                "last_name, "
+                "email, "
+                "phone, "
+                "company_name, "
+                "commercial_id) "
+                "VALUES ("
+                ":first_name, "
+                ":last_name, "
+                ":email, "
+                ":phone, "
+                ":company_name, "
+                ":commercial_id)"),
+            {"first_name": first_name, "last_name": last_name, "email": email,
+             "phone": phone,
+             "company_name": company_name, "commercial_id": commercial_id}
+        )
+        db_session.commit()
+
+    return insert
 
 
 def insert_roles_in_table(db_session):

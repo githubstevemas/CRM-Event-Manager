@@ -3,14 +3,6 @@ import getpass
 
 def display_main_menu():
     # Display main menu
-    """
-    créer un collaborateur ;
-    modifier un collaborateur (y compris son département) ;
-    créer un contrat ;
-    modifier un contrat (tous les champs, y compris relationnels) ;
-    créer un événement ;
-    modifier un événement (tous les champs, y compris relationnels) ;
-    """
 
     print("\nMENU :\n\n"
           "[1] Client management\n"
@@ -21,40 +13,110 @@ def display_main_menu():
     return input("You choice ? ")
 
 
-def client_menu():
-    print("\nClient menu :\n\n"
-          "[1] Add new client\n"
-          "[2] Client employee\n"
-          "[3] Display all clients\n"
-          "[0] Return")
-    return input("You choice ? ")
+def client_menu(role):
+
+    while True:
+
+        print("\nClient menu :\n\n")
+        print("[1] List clients")
+        if role == 2:
+            print("[2] Add client")
+            print("[3] Edit client")
+        print("[0] Return")
+
+        choice = int(input("Your choice? "))
+
+        if role == 2 and 0 <= choice < 4:
+            return choice
+        elif role != 2 and choice in [0, 1]:
+            return choice
+        else:
+            print("Wrong choice. Please try again.")
 
 
-def contract_menu():
-    print("\nContract menu :\n\n"
-          "[1] Add new contract\n"
-          "[2] Edit contract\n"
-          "[3] Display all contracts\n"
-          "[0] Return")
-    return input("You choice ? ")
+def contract_menu(role):
+
+    while True:
+
+        index = 1
+        options = {}
+
+        print("\nContract menu :\n\n")
+
+        print(f"[{index}] List contracts")
+        options[index] = "list_contracts"
+        index += 1
+
+        if role == 1:
+            print(f"[{index}] Add contract")
+            options[index] = "add_contract"
+            index += 1
+        if role in [1, 2]:
+            print(f"[{index}] Edit contract")
+            options[index] = "edit_contract"
+            index += 1
+
+        print("[0] Return")
+
+        choice = int(input("Your choice? "))
+
+        if 0 <= choice < index:
+            return options.get(choice)
+        else:
+            print("Wrong choice. Please try again.")
 
 
-def event_menu():
-    print("\nEvent menu :\n\n"
-          "[1] Add new event\n"
-          "[2] Edit event\n"
-          "[3] Display all event\n"
-          "[0] Return")
-    return input("You choice ? ")
+def event_menu(role):
+
+    while True:
+
+        index = 1
+        options = {}
+
+        print("\nEvent menu :\n\n")
+
+        print(f"[{index}] List events")
+        options[index] = "list_events"
+        index += 1
+
+        if role in [2]:
+            print(f"[{index}] Add event")
+            options[index] = "add_event"
+            index += 1
+
+        if role in [1, 3]:
+            print(f"[{index}] Edit event")
+            options[index] = "edit_event"
+            index += 1
+
+        print("[0] Return")
+
+        choice = int(input("Your choice? "))
+
+        if 0 <= choice < index:
+            return options.get(choice)
+        else:
+            print("Wrong choice. Please try again.")
 
 
-def employee_menu():
-    print("\nEmployee menu :\n\n"
-          "[1] Add new employee\n"
-          "[2] Edit employee\n"
-          "[3] Display all employees\n"
-          "[0] Return")
-    return input("You choice ? ")
+def employee_menu(role):
+
+    while True:
+        print("\nEmployee menu :\n\n")
+        print("[1] List employees")
+        if role == 1:
+            print("[2] Add employee")
+            print("[3] Edit employee")
+        print("[0] Return")
+
+        choice = int(input("Your choice? "))
+
+        if role == 1 and 0 <= choice < 4:
+            return choice
+        elif role != 1 and choice in [0, 1]:
+            return choice
+        else:
+            print("Wrong choice. Please try again.")
 
 
 def get_department():

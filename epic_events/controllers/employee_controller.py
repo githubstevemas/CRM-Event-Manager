@@ -4,13 +4,23 @@ from epic_events.models.employee import Employee
 from epic_events.views.cli import display_register, display_employees
 
 
-def register_employee():
+def get_employees():
+
+    employees = SessionFactory.query(Employee).all()
+    display_employees(employees)
+
+
+def add_employee():
 
     new_employee = display_register()
     register(new_employee, global_db_session)
 
 
-def get_employees():
+def edit_employee():
 
-    employees = SessionFactory.query(Employee).all()
-    display_employees(employees)
+    print("edit employee")
+    pass
+
+
+def delete_employee():
+    pass

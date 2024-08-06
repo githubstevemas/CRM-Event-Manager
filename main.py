@@ -1,6 +1,6 @@
 import argparse
 
-from epic_events.controllers.user_controller import main_menu
+from epic_events.controllers.menu_controller import main_menu
 from epic_events.controllers.auth_controller import main_login
 
 

@@ -22,7 +22,8 @@ DATABASE_URL = \
 TEST_DATABASE_URL = \
     f"postgresql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{TEST_DB}"
 
-main_engine = create_engine(DATABASE_URL, echo=True)
+# Disable SQL logging
+main_engine = create_engine(DATABASE_URL, echo=False)
 
 # Get tables and create session
 Base = declarative_base()

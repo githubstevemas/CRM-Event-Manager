@@ -11,6 +11,7 @@ from epic_events.models.employee import Employee
 from epic_events.views.cli import ask_password
 
 
+TOKEN_PATH = 'tokens/token.txt'
 ph = PasswordHasher()
 
 
@@ -46,8 +47,7 @@ def main_login(args):
     if exists:
 
         password = ask_password()
-        if verify_password(password, args.email):
-
+        if verify_password(password, args.email, session):
             # if password OK get encrypted token and save it
             token = create_encrypted_token(args.email)
             save_token(token)
@@ -65,17 +65,15 @@ def logout():
 
 def is_email_exists(email, session):
 
-    exists_query = session.query(Employee.id).filter_by(email=email).exists()
-    result = session.query(exists_query).scalar()
+    employee = session.query(Employee.id).filter_by(email=email).exists()
+    result = session.query(employee).scalar()
     return result
 
 
-def verify_password(provided_password, email):
+def verify_password(provided_password, email, session):
 
     employee = session.query(Employee).filter_by(email=email).first()
-
     stored_password = employee.password
-    # print(stored_password)
 
     return ph.verify(stored_password, provided_password)
 
@@ -101,15 +99,6 @@ def save_token(token):
     folder = 'tokens'
     if not os.path.exists(folder):
         os.makedirs(folder)
-    filepath = os.path.join(folder, 'token.txt')
 
-    with open(filepath, 'w') as file:
+    with open(TOKEN_PATH, 'w') as file:
         file.write(token)
-
-
-def load_token():
-    # Load token from local txt and return it
-
-    with open('tokens/token.txt', 'r') as file:
-        token = file.read()
-    return token
