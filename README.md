@@ -33,9 +33,9 @@ Once the code has been downloaded, go to the project directory and enter the fol
 pip install -r requirements.txt
 ```
 
-*define environment variables :*
+*define environment variables (choice #1 in menu):*
 ```
-python generate_dotenv.py
+python set_project.py
 ```
 
 *set your ids in .env file :*
@@ -43,6 +43,12 @@ python generate_dotenv.py
 DB_PASSWORD=your_db_password
 DB_USERNAME=your_db_username
 ```
+
+*create tables in db (choice #2 in menu):*
+```
+python set_project.py
+```
+
 <br>
 
 > [!NOTE]
