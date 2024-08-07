@@ -1,3 +1,5 @@
+<br>
+
 # CRM-Event-Manager
  
 Python-based application designed to manage clients, events, and employees for your company. The application utilizes SQLAlchemy for database interactions and pytest for unit testing. The project includes features such as user authentication, role-based access control, and CRUD operations.
