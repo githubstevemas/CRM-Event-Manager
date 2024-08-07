@@ -7,6 +7,8 @@ from epic_events.controllers.auth_controller import (is_email_exists,
                                                      hash_password,
                                                      verify_password)
 from epic_events.controllers.permission_controller import verify_token
+from epic_events.controllers.validators import validate_password, \
+    validate_email_adress
 from epic_events.models.employee import Employee
 from epic_events.views.cli import client_menu, contract_menu, event_menu
 from tests.conftest import insert_roles_in_table
@@ -72,6 +74,24 @@ def test_verify_password(db_session, insert_test_employee):
                          role_id=2)
 
     assert verify_password(password, email_test, db_session)
+
+
+def test_validate_password():
+
+    wrong_password = "wrong"
+    assert not validate_password(wrong_password)
+
+    good_password= "Good@p4ssword"
+    assert validate_password(good_password)
+
+
+def test_validate_email():
+
+    wrong_email = "wrong.email"
+    assert not validate_email_adress(wrong_email)
+
+    good_email = "good@email.com"
+    assert validate_email_adress(good_email)
 
 
 def test_verify_token(capsys):

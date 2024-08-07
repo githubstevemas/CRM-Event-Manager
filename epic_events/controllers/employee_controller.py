@@ -13,6 +13,7 @@ def get_employees():
 def add_employee():
 
     new_employee = display_register()
+
     register(new_employee, global_db_session)
 
 

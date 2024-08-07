@@ -1,5 +1,10 @@
 import getpass
 
+from config.config import global_db_session as session
+from epic_events.controllers.validators import validate_email_adress, \
+    validate_password
+from epic_events.models.employee import Employee
+
 
 def display_main_menu():
     # Display main menu
@@ -141,12 +146,40 @@ def get_department():
 def display_register():
     # Get employee datas
 
-    new_employee = {'first_name': input("First name ? ").lower(),
-                    'last_name': input("Last name ? ").lower(),
-                    'password': input("Password ? "),
-                    'email': input("Email ? ").lower(),
-                    'phone': input("Phone number ? "),
-                    'role_id': get_department()}
+    first_name = input("First name ? ").lower()
+    last_name = input("Last name ? ").lower()
+
+    while True:
+        password = input("Password ? (Min 8 characters, include uppercase & "
+                         "lowercase, digits, symbols, and no spaces.) ")
+        valid_password = validate_password(password)
+        if valid_password:
+            break
+        else:
+            print("Wrong password.")
+
+    while True:
+        email = input("Email ? ").lower()
+        valid_email = validate_email_adress(email)
+
+        if valid_email:
+            existing_user = session.query(Employee).filter_by(email=email).first()
+            if existing_user:
+                print("Email already in db.")
+            else:
+                break
+        else:
+            print("Email adress not valid.")
+
+    phone = input("Phone number ? ")
+    role_id = get_department()
+
+    new_employee = {'first_name': first_name,
+                    'last_name': last_name,
+                    'password': password,
+                    'email': email,
+                    'phone': phone,
+                    'role_id': role_id}
 
     return new_employee
 

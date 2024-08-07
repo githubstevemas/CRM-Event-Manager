@@ -25,3 +25,4 @@ class Employee(Base):
     role_id = Column(Integer, ForeignKey('employee_role.id'), nullable=False)
 
     role = relationship('EmployeeRole', back_populates='employees')
+    clients = relationship('Client', back_populates='commercial')
