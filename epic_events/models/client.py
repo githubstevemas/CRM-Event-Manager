@@ -15,8 +15,10 @@ class Client(Base):
     email = Column(String(255), nullable=False)
     phone = Column(String(20), nullable=False)
     company_name = Column(String(100), nullable=False)
-    first_contact = Column(DateTime, default=datetime.now())
+    first_contact = Column(DateTime, default=datetime.now)
     last_update = Column(DateTime)
     commercial_id = Column(Integer, ForeignKey('employee.id'), nullable=False)
 
     commercial = relationship('Employee', back_populates='clients')
+    contracts = relationship('Contract', back_populates='client')
+    events = relationship('Event', back_populates='client')

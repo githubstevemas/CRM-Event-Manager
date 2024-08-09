@@ -3,9 +3,9 @@ from unittest.mock import patch
 from sqlalchemy import inspect
 
 from epic_events.controllers.auth_controller import (is_email_exists,
-                                                     register,
                                                      hash_password,
-                                                     verify_password)
+                                                     verify_password,
+                                                     register_employee)
 from epic_events.controllers.permission_controller import verify_token
 from epic_events.controllers.validators import validate_password, \
     validate_email_adress
@@ -35,7 +35,7 @@ def test_register_employee(db_session, test_engine):
                      'phone': '+33531313131',
                      'role_id': 1}
 
-    register(test_employee, db_session)
+    register_employee(test_employee, db_session)
 
     assert db_session.query(Employee).filter_by(
         email='test@epic-events.com').first() is not None
@@ -81,7 +81,7 @@ def test_validate_password():
     wrong_password = "wrong"
     assert not validate_password(wrong_password)
 
-    good_password= "Good@p4ssword"
+    good_password = "Good@p4ssword"
     assert validate_password(good_password)
 
 

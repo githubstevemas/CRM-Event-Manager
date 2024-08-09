@@ -2,7 +2,7 @@ import getpass
 
 from config.config import global_db_session as session
 from epic_events.controllers.validators import validate_email_adress, \
-    validate_password
+    validate_password, get_client_datas
 from epic_events.models.employee import Employee
 
 
@@ -19,7 +19,6 @@ def display_main_menu():
 
 
 def client_menu(role):
-
     while True:
 
         print("\nClient menu :\n\n")
@@ -40,7 +39,6 @@ def client_menu(role):
 
 
 def contract_menu(role):
-
     while True:
 
         index = 1
@@ -72,7 +70,6 @@ def contract_menu(role):
 
 
 def event_menu(role):
-
     while True:
 
         index = 1
@@ -105,7 +102,6 @@ def event_menu(role):
 
 
 def employee_menu(role):
-
     while True:
         print("\nEmployee menu :\n\n")
         print("[1] List employees")
@@ -143,7 +139,7 @@ def get_department():
         return get_department()
 
 
-def display_register():
+def display_add_employee():
     # Get employee datas
 
     first_name = input("First name ? ").lower()
@@ -163,7 +159,8 @@ def display_register():
         valid_email = validate_email_adress(email)
 
         if valid_email:
-            existing_user = session.query(Employee).filter_by(email=email).first()
+            existing_user = session.query(Employee).filter_by(
+                email=email).first()
             if existing_user:
                 print("Email already in db.")
             else:
@@ -184,24 +181,57 @@ def display_register():
     return new_employee
 
 
-def display_employees(employees):
-    print("Employees in db :")
-    for employee in employees:
-        print(f"ID: {employee.id}, "
-              f"Name: {employee.first_name} {employee.last_name}, "
-              f"Password: {employee.password}"
-              f"Email: {employee.email}, "
-              f"Department: {employee.role_id}")
-
-
-def display_clients(clients):
-    print("Clients in db :")
-    for client in clients:
-        print(f"ID: {client.id}, "
-              f"Name: {client.first_name} {client.last_name}, "
-              f"Email: {client.email}, "
-              f"Company: {client.company_name}")
-
-
 def ask_password():
     return getpass.getpass("Please enter your password : ")
+
+
+def display_add_client():
+    first_name = input("First name ? ").lower()
+    last_name = input("Last name ? ").lower()
+    while True:
+        email = input("Email ? ").lower()
+        valid_email = validate_email_adress(email)
+        if valid_email:
+            break
+        else:
+            print("Email adress not valid.")
+    phone = input("Phone number ? ")
+    company_name = input("Company name ? ").lower()
+
+    client_datas = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'phone': phone,
+        'company_name': company_name
+    }
+
+    return client_datas
+
+
+def display_add_contract():
+    while True:
+        try:
+            client_id = int(input("Client id? "))
+            client = get_client_datas(client_id)
+            alright = input(
+                f"Client {client.first_name} {client.last_name} ? y/n: ")
+            if alright.lower() == "y":
+                break
+        except ValueError:
+            print("Invalid id.")
+        except AttributeError:
+            print("Client not found.")
+
+    amount = int(input("Event amount ? ($) "))
+    already_payed = int(input("Already payed ? ($) "))
+
+    left_to_pay = amount - already_payed
+
+    contract_datas = {
+        'client_id': client_id,
+        'amount': amount,
+        'left_to_pay': left_to_pay
+    }
+
+    return contract_datas

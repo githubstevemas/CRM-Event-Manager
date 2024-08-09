@@ -9,6 +9,7 @@ from epic_events.controllers.event_controller import get_events, add_event, \
     edit_event, delete_event
 from epic_events.controllers.permission_controller import verify_token, \
     verify_role
+from epic_events.controllers.validators import get_employee_id
 from epic_events.views.cli import (display_main_menu,
                                    employee_menu,
                                    contract_menu,
@@ -24,19 +25,24 @@ def main_menu():
 
             add_employee()
 
+        if choice == "666":
+
+            id = get_employee_id()
+            print(f"id de l'employee {id}")
+
         if choice == "1":
             payload = verify_token()
             if payload:
                 role_id = verify_role(payload)
 
                 client_choice = client_menu(role_id)
-                if client_choice == "1":
+                if client_choice == 1:
                     get_clients()
-                elif client_choice == "2":
+                elif client_choice == 2:
                     add_client()
-                elif client_choice == "3":
+                elif client_choice == 3:
                     edit_client()
-                elif client_choice == "4":
+                elif client_choice == 4:
                     delete_client()
 
             else:
@@ -86,15 +92,15 @@ def main_menu():
             if payload:
                 role_id = verify_role(payload)
                 employee_choice = employee_menu(role_id)
-                if employee_choice == "1":
+                if employee_choice == 1:
                     get_employees()
-                elif employee_choice == "2":
+                elif employee_choice == 2:
                     add_employee()
-                elif employee_choice == "3":
+                elif employee_choice == 3:
                     edit_employee()
-                elif employee_choice == "4":
+                elif employee_choice == 4:
                     delete_employee()
-                elif employee_choice == "0":
+                elif employee_choice == 0:
                     main_menu()
             else:
                 # demander de se re-log

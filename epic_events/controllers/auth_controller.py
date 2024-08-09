@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 import jwt
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from sqlalchemy.orm import Session
 
 from config.config import global_db_session as session
 from config.keys import get_private_key
@@ -23,9 +22,10 @@ def hash_password(password):
     return ph.hash(password)
 
 
-def register(new_employee, db: Session):
+def register_employee(new_employee, global_db_session=session):
+
     # Hash & salt password and create Employee instance
-    hashed_password = hash_password(new_employee['password'])
+    hashed_password = ph.hash(new_employee['password'])
 
     new_employee = Employee(first_name=new_employee['first_name'],
                             last_name=new_employee['last_name'],
@@ -35,9 +35,8 @@ def register(new_employee, db: Session):
                             role_id=new_employee['role_id'])
 
     # Add new_employee to the db
-    db.add(new_employee)
-    db.commit()
-    return new_employee
+    global_db_session.add(new_employee)
+    global_db_session.commit()
 
 
 def main_login(args):

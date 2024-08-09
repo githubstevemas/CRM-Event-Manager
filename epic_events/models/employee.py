@@ -26,3 +26,5 @@ class Employee(Base):
 
     role = relationship('EmployeeRole', back_populates='employees')
     clients = relationship('Client', back_populates='commercial')
+    contracts = relationship('Contract', back_populates='commercial')
+    events = relationship('Event', back_populates='support')
