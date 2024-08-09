@@ -28,7 +28,3 @@ def edit_employee():
 
     print("edit employee")
     pass
-
-
-def delete_employee():
-    pass

@@ -3,7 +3,7 @@ from password_validator import PasswordValidator
 
 from config.config import global_db_session
 from epic_events.controllers.permission_controller import verify_token
-from epic_events.models import Employee, Client
+from epic_events.models import Employee, Client, Contract
 
 
 def validate_password(password):
@@ -23,7 +23,6 @@ def validate_password(password):
 
 
 def validate_email_adress(email):
-
     return validate_email(email)
 
 
@@ -42,3 +41,11 @@ def get_client_datas(client_id):
     client = global_db_session.query(Client).filter_by(id=client_id).first()
 
     return client
+
+
+def get_contract_datas(contract_id):
+
+    contract = global_db_session.query(Contract).filter_by(
+        id=contract_id).first()
+
+    return contract

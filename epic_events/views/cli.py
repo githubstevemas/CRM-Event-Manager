@@ -2,7 +2,7 @@ import getpass
 
 from config.config import global_db_session as session
 from epic_events.controllers.validators import validate_email_adress, \
-    validate_password, get_client_datas
+    validate_password, get_client_datas, get_contract_datas
 from epic_events.models.employee import Employee
 
 
@@ -235,3 +235,36 @@ def display_add_contract():
     }
 
     return contract_datas
+
+
+def display_add_event():
+    while True:
+        try:
+            contract_id = int(input("Contract id? "))
+            contract = get_contract_datas(contract_id)
+            alright = input(
+                f"Client {contract.client.first_name} {contract.client.last_name} ? y/n: ")
+            if alright.lower() == "y":
+                break
+        except ValueError:
+            print("Invalid id.")
+        except AttributeError:
+            print("Contract not found.")
+
+    start_date = input("Start date ? (YYYY-MM-DD HH:MM:SS) ")
+    end_date = input("End date ? (YYYY-MM-DD HH:MM:SS) ")
+    location = input("Location ? ")
+    attendees = int(input("Attendees ? "))
+    notes = input("Add notes : ")
+
+    event_datas = {
+        'contract_id': contract_id,
+        'client_id': contract.client_id,
+        'event_date_start': start_date,
+        'event_date_end': end_date,
+        'location': location,
+        'attendees': attendees,
+        'notes': notes
+    }
+
+    return event_datas

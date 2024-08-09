@@ -10,28 +10,32 @@ def get_clients():
     display_clients(clients)
 
 
-def add_client():
+def add_client(client_datas, commercial_id, db_session=global_db_session):
+
+    try:
+        new_client = Client(first_name=client_datas['first_name'],
+                            last_name=client_datas['last_name'],
+                            email=client_datas['email'],
+                            phone=client_datas['phone'],
+                            company_name=client_datas['company_name'],
+                            commercial_id=commercial_id)
+
+        # Add new_client to the db
+        db_session.add(new_client)
+        db_session.commit()
+        print(f"Client successfully added.")
+
+    except Exception as e:
+        print(f"Error while adding client: {e}")
+
+
+def get_client_datas_to_add():
 
     client_datas = display_add_client()
     commercial_id = get_employee_id()
-
-    new_client = Client(first_name=client_datas['first_name'],
-                        last_name=client_datas['last_name'],
-                        email=client_datas['email'],
-                        phone=client_datas['phone'],
-                        company_name=client_datas['company_name'],
-                        commercial_id=commercial_id)
-
-    # Add new_client to the db
-    global_db_session.add(new_client)
-    global_db_session.commit()
-    print("Client successfully added.")
+    add_client(client_datas, commercial_id)
 
 
 def edit_client():
     print("edit client")
-    pass
-
-
-def delete_client():
     pass
