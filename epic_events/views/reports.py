@@ -2,10 +2,11 @@ from tabulate import tabulate
 
 
 def display_employees(employees_list):
-    headers = ["First name", "Last name", "Email", "Phone", "Role"]
-    datas = [[employee.first_name, employee.last_name, employee.email,
-              employee.phone, employee.role.name] for employee in
-             employees_list]
+    headers = ["Id", "First name", "Last name", "Email", "Phone", "Role"]
+    datas = [
+        [employee.id, employee.first_name, employee.last_name, employee.email,
+         employee.phone, employee.role.name] for employee in
+        employees_list]
 
     table = tabulate(datas, headers=headers, tablefmt="rounded_grid",
                      numalign="center", stralign="center")
@@ -13,9 +14,9 @@ def display_employees(employees_list):
 
 
 def display_clients(clients_list):
-    headers = ["First name", "Last name", "Email", "Phone", "Company",
+    headers = ["Id", "First name", "Last name", "Email", "Phone", "Company",
                "First contact", "Commercial"]
-    datas = [[client.first_name, client.last_name, client.email,
+    datas = [[client.id, client.first_name, client.last_name, client.email,
               client.phone, client.company_name, client.first_contact,
               client.commercial.last_name]
              for

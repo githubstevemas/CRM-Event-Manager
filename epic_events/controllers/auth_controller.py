@@ -10,7 +10,7 @@ from config.config import global_db_session as session
 from config.keys import get_private_key
 from epic_events.controllers.permission_controller import verify_token
 from epic_events.models.employee import Employee
-from epic_events.views.cli import ask_password
+from epic_events.views.cli_menu import ask_password
 
 TOKEN_PATH = 'tokens/token.txt'
 ph = PasswordHasher()
@@ -27,16 +27,20 @@ def register_employee(new_employee, global_db_session=session):
     # Hash & salt password and create Employee instance
     hashed_password = ph.hash(new_employee['password'])
 
-    new_employee = Employee(first_name=new_employee['first_name'],
-                            last_name=new_employee['last_name'],
-                            password=hashed_password,
-                            email=new_employee['email'],
-                            phone=new_employee['phone'],
-                            role_id=new_employee['role_id'])
+    try:
+        new_employee = Employee(first_name=new_employee['first_name'],
+                                last_name=new_employee['last_name'],
+                                password=hashed_password,
+                                email=new_employee['email'],
+                                phone=new_employee['phone'],
+                                role_id=new_employee['role_id'])
 
-    # Add new_employee to the db
-    global_db_session.add(new_employee)
-    global_db_session.commit()
+        # Add new_employee to the db
+        global_db_session.add(new_employee)
+        global_db_session.commit()
+
+    except Exception as e:
+        print(f"Error while adding contract: {e}")
 
 
 def main_login(args):

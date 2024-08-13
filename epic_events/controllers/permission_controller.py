@@ -34,6 +34,7 @@ def verify_token(path=TOKEN_PATH):
 
 
 def verify_role(payload):
+
     employee = session.query(Employee).filter_by(
         email=payload['user_id']).first()
 

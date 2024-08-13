@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from epic_events.models.client import Client
 from epic_events.models.employee import Employee
-from epic_events.views.cli import get_department
+from epic_events.views.employee_view import get_department
 from epic_events.views.reports import display_clients, display_employees
 
 

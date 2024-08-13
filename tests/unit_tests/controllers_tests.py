@@ -11,10 +11,11 @@ from epic_events.controllers.contract_controller import add_contract
 from epic_events.controllers.event_controller import add_event
 from epic_events.controllers.permission_controller import verify_token
 from epic_events.controllers.validators import validate_password, \
-    validate_email_adress
+    validate_email_adress, get_employee_datas, get_client_datas, \
+    get_contract_datas
 from epic_events.models import Client, Contract, Event
 from epic_events.models.employee import Employee
-from epic_events.views.cli import client_menu, contract_menu, event_menu
+from epic_events.views.cli_menu import client_menu, contract_menu, event_menu
 from tests.conftest import insert_roles_in_table
 
 
@@ -74,22 +75,6 @@ def test_verify_password(db_session, insert_test_employee):
                          role_id=2)
 
     assert verify_password(password, email_test, db_session)
-
-
-def test_validate_password():
-    wrong_password = "wrong"
-    assert not validate_password(wrong_password)
-
-    good_password = "Good@p4ssword"
-    assert validate_password(good_password)
-
-
-def test_validate_email():
-    wrong_email = "wrong.email"
-    assert not validate_email_adress(wrong_email)
-
-    good_email = "good@email.com"
-    assert validate_email_adress(good_email)
 
 
 def test_verify_token(capsys):
@@ -172,3 +157,37 @@ def test_add_event(db_session, test_engine):
 
     assert db_session.query(Event).filter_by(
         location='toulouse').first() is not None
+
+
+def test_validate_password():
+    wrong_password = "wrong"
+    assert not validate_password(wrong_password)
+
+    good_password = "Good@p4ssword"
+    assert validate_password(good_password)
+
+
+def test_validate_email():
+    wrong_email = "wrong.email"
+    assert not validate_email_adress(wrong_email)
+
+    good_email = "good@email.com"
+    assert validate_email_adress(good_email)
+
+
+def test_get_employee_datas(db_session):
+
+    employee = get_employee_datas(1, db_session)
+    assert employee.first_name == 'john'
+
+
+def test_get_client_datas(db_session):
+
+    client = get_client_datas(1, db_session)
+    assert client.first_name == 'jane'
+
+
+def test_get_contract_datas(db_session):
+
+    contract = get_contract_datas(1, db_session)
+    assert contract.left_to_pay == 500

@@ -91,7 +91,7 @@ def insert_test_client(db_session):
 
 
 def insert_roles_in_table(db_session):
-    # Insert roles
+
     db_session.execute(
         text("INSERT INTO employee_role (id, name) VALUES (:id, :name)"),
         [{"id": 1, "name": "commercial"},

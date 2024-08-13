@@ -1,19 +1,18 @@
 from epic_events.controllers.auth_controller import logout
 from epic_events.controllers.client_controller import get_clients, \
-    add_client, edit_client, delete_client
+    edit_client, get_client_datas_to_add
 from epic_events.controllers.contract_controller import get_contracts, \
-    add_contract, edit_contract, delete_contract
+    edit_contract, get_contract_datas_to_add
 from epic_events.controllers.employee_controller import get_employees, \
-    add_employee, edit_employee, delete_employee
-from epic_events.controllers.event_controller import get_events, add_event, \
-    edit_event, delete_event
+    add_employee, edit_employee
+from epic_events.controllers.event_controller import get_events, \
+    edit_event, get_event_datas_to_add
 from epic_events.controllers.permission_controller import verify_token, \
     verify_role
-from epic_events.controllers.validators import get_employee_id
-from epic_events.views.cli import (display_main_menu,
-                                   employee_menu,
-                                   contract_menu,
-                                   event_menu, client_menu)
+from epic_events.views.cli_menu import (display_main_menu,
+                                        employee_menu,
+                                        contract_menu,
+                                        event_menu, client_menu)
 
 
 def main_menu():
@@ -25,12 +24,8 @@ def main_menu():
 
             add_employee()
 
-        if choice == "666":
-
-            id = get_employee_id()
-            print(f"id de l'employee {id}")
-
         if choice == "1":
+            # Check permissions token to display client menu
             payload = verify_token()
             if payload:
                 role_id = verify_role(payload)
@@ -39,17 +34,17 @@ def main_menu():
                 if client_choice == 1:
                     get_clients()
                 elif client_choice == 2:
-                    add_client()
+                    get_client_datas_to_add()
                 elif client_choice == 3:
                     edit_client()
-                elif client_choice == 4:
-                    delete_client()
 
             else:
                 # demander de se re-log
                 pass
 
         if choice == "2":
+            # Check permissions token to display contract menu
+
             payload = verify_token()
             if payload:
                 role_id = verify_role(payload)
@@ -57,11 +52,9 @@ def main_menu():
                 if contract_choice == "list_contracts":
                     get_contracts()
                 elif contract_choice == "add_contract":
-                    add_contract()
+                    get_contract_datas_to_add()
                 elif contract_choice == "edit_contract":
                     edit_contract()
-                elif contract_choice == "delete_contract":
-                    delete_contract()
                 elif contract_choice == "0":
                     main_menu()
             else:
@@ -69,6 +62,8 @@ def main_menu():
                 pass
 
         if choice == "3":
+            # Check permissions token to display event menu
+
             payload = verify_token()
             if payload:
                 role_id = verify_role(payload)
@@ -76,11 +71,9 @@ def main_menu():
                 if event_choice == "list_events":
                     get_events()
                 elif event_choice == "add_event":
-                    add_event()
+                    get_event_datas_to_add()
                 elif event_choice == "edit_event":
                     edit_event()
-                elif event_choice == "delte_event":
-                    delete_event()
                 elif event_choice == "0":
                     main_menu()
             else:
@@ -88,6 +81,8 @@ def main_menu():
                 pass
 
         if choice == "4":
+            # Check permissions token to display employee menu
+
             payload = verify_token()
             if payload:
                 role_id = verify_role(payload)
@@ -98,8 +93,6 @@ def main_menu():
                     add_employee()
                 elif employee_choice == 3:
                     edit_employee()
-                elif employee_choice == 4:
-                    delete_employee()
                 elif employee_choice == 0:
                     main_menu()
             else:
