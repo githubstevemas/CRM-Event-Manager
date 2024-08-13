@@ -1,6 +1,6 @@
 from config.config import global_db_session
 from epic_events.controllers.validators import get_client_datas, \
-    get_contract_datas
+    get_contract_datas, is_numeric
 from epic_events.models import Contract
 from epic_events.views.reports import display_contracts
 
@@ -19,8 +19,19 @@ def display_add_contract():
         except AttributeError:
             print("Client not found.")
 
-    amount = int(input("Event amount ? ($) "))
-    already_payed = int(input("Already payed ? ($) "))
+    while True:
+        amount = int(input("Event amount in $ ? "))
+        if is_numeric(amount):
+            break
+        else:
+            print("Must be numeric.")
+
+    while True:
+        already_payed = int(input("Already payed in $ ? "))
+        if is_numeric(already_payed):
+            break
+        else:
+            print("Must be numeric.")
 
     left_to_pay = amount - already_payed
 

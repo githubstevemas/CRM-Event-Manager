@@ -6,8 +6,8 @@ from epic_events.views.client_view import display_add_client, \
 from epic_events.views.reports import display_clients
 
 
-def get_clients():
-    clients = global_db_session.query(Client).all()
+def get_clients(session=global_db_session):
+    clients = session.query(Client).all()
     display_clients(clients)
 
 

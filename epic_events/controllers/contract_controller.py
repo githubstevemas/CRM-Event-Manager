@@ -9,8 +9,8 @@ from epic_events.views.contract_view import display_add_contract, \
 from epic_events.views.reports import display_contracts
 
 
-def get_contracts():
-    contracts = global_db_session.query(Contract).all()
+def get_contracts(db_session=global_db_session):
+    contracts = db_session.query(Contract).all()
     display_contracts(contracts)
 
 

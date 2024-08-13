@@ -6,9 +6,9 @@ from epic_events.views.event_view import display_add_event, \
 from epic_events.views.reports import display_events
 
 
-def get_events():
+def get_events(session=global_db_session):
 
-    events = global_db_session.query(Event).all()
+    events = session.query(Event).all()
     display_events(events)
 
 

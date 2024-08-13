@@ -1,9 +1,12 @@
+from datetime import datetime
+import re
+
 from validate_email import validate_email
 from password_validator import PasswordValidator
 
 from config.config import global_db_session as session
 from epic_events.controllers.permission_controller import verify_token
-from epic_events.models import Employee, Client, Contract
+from epic_events.models import Employee, Client, Contract, Event
 
 
 def validate_password(password):
@@ -23,7 +26,31 @@ def validate_password(password):
 
 
 def validate_email_adress(email):
+
     return validate_email(email)
+
+
+def is_numeric(user_input):
+
+    try:
+        float(user_input)
+        return True
+    except ValueError:
+        return False
+
+
+def validate_datetime(user_input):
+
+    regex = r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$'
+    if re.match(regex, user_input):
+
+        try:
+            datetime.strptime(user_input, '%Y-%m-%d %H:%M:%S')
+            return True
+        except ValueError:
+            return False
+    else:
+        return False
 
 
 def get_employee_id():
@@ -61,4 +88,7 @@ def get_contract_datas(contract_id, global_db_session=session):
 
 def get_event_datas(event_id, global_db_session=session):
 
-    pass
+    event = global_db_session.query(Event).filter_by(
+        id=event_id).first()
+
+    return event

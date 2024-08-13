@@ -2,7 +2,7 @@ from sqlalchemy.event import Events
 
 from config.config import global_db_session
 from epic_events.controllers.validators import get_contract_datas, \
-    get_event_datas
+    get_event_datas, is_numeric, validate_datetime
 from epic_events.views.reports import display_events
 
 
@@ -21,10 +21,29 @@ def display_add_event():
         except AttributeError:
             print("Contract not found.")
 
-    start_date = input("Start date ? (YYYY-MM-DD HH:MM:SS) ")
-    end_date = input("End date ? (YYYY-MM-DD HH:MM:SS) ")
+    while True:
+        start_date = input("Start date ? (YYYY-MM-DD HH:MM:SS) ")
+        if validate_datetime(start_date):
+            break
+        else:
+            print("Format must be YYYY-MM-DD HH:MM:SS")
+
+    while True:
+        end_date = input("End date ? (YYYY-MM-DD HH:MM:SS) ")
+        if validate_datetime(end_date):
+            break
+        else:
+            print("Format must be YYYY-MM-DD HH:MM:SS")
+
     location = input("Location ? ")
-    attendees = int(input("Attendees ? "))
+
+    while True:
+        attendees = int(input("Attendees ? "))
+        if is_numeric(attendees):
+            break
+        else:
+            print("Must be numeric.")
+
     notes = input("Add notes : ")
 
     event_datas = {
