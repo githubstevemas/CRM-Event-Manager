@@ -2,11 +2,12 @@ from epic_events.controllers.auth_controller import logout
 from epic_events.controllers.client_controller import get_clients, \
     edit_client, get_client_datas_to_add
 from epic_events.controllers.contract_controller import get_contracts, \
-    edit_contract, get_contract_datas_to_add
+    edit_contract, get_contract_datas_to_add, get_not_signed_contracts, \
+    get_not_payed_contracts
 from epic_events.controllers.employee_controller import get_employees, \
     add_employee, edit_employee
 from epic_events.controllers.event_controller import get_events, \
-    edit_event, get_event_datas_to_add
+    edit_event, get_event_datas_to_add, get_event_no_support, get_own_events
 from epic_events.controllers.permission_controller import verify_token, \
     verify_role
 from epic_events.views.cli_menu import (display_main_menu,
@@ -51,6 +52,10 @@ def main_menu():
                 contract_choice = contract_menu(role_id)
                 if contract_choice == "list_contracts":
                     get_contracts()
+                elif contract_choice == "list_not_signed_contracts":
+                    get_not_signed_contracts()
+                elif contract_choice == "list_not_payed_contracts":
+                    get_not_payed_contracts()
                 elif contract_choice == "add_contract":
                     get_contract_datas_to_add()
                 elif contract_choice == "edit_contract":
@@ -70,6 +75,10 @@ def main_menu():
                 event_choice = event_menu(role_id)
                 if event_choice == "list_events":
                     get_events()
+                elif event_choice == "list_no_support":
+                    get_event_no_support()
+                elif event_choice == "list_own_events":
+                    get_own_events()
                 elif event_choice == "add_event":
                     get_event_datas_to_add()
                 elif event_choice == "edit_event":

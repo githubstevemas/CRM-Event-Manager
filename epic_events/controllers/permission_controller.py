@@ -23,13 +23,10 @@ def verify_token(path=TOKEN_PATH):
 
     try:
         payload = jwt.decode(token, public_key, algorithms=["RS256"])
-        print(f"token OK. {payload}")
         return payload
     except jwt.ExpiredSignatureError:
-        print("Old token.")
         return False
     except jwt.InvalidTokenError:
-        print("Wrong token.")
         return False
 
 

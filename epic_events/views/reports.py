@@ -62,8 +62,8 @@ def display_contracts(contracts_list):
     table.add_column("Reference", justify="center", style="cyan")
     table.add_column("Client", justify="center", style="cyan")
     table.add_column("Commercial", justify="center", style="cyan")
-    table.add_column("Amount ($)", justify="right", style="cyan")
-    table.add_column("Left to Pay ($)", justify="right", style="cyan")
+    table.add_column("Amount", justify="right", style="cyan")
+    table.add_column("Left to Pay", justify="right", style="cyan")
     table.add_column("Creation", justify="center", style="cyan")
     table.add_column("Status", justify="center", style="cyan")
 

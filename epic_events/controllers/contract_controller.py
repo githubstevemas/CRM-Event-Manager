@@ -10,8 +10,24 @@ from epic_events.views.reports import display_contracts
 
 
 def get_contracts(db_session=global_db_session):
+
     contracts = db_session.query(Contract).all()
     display_contracts(contracts)
+
+
+def get_not_signed_contracts(db_session=global_db_session):
+
+    not_signed_contracts = (db_session.query(Contract)
+                            .filter(Contract.status.is_(False)).all())
+    display_contracts(not_signed_contracts)
+
+
+def get_not_payed_contracts(db_session=global_db_session):
+
+    not_payed_contracts = (db_session.query(Contract)
+                           .filter(Contract.left_to_pay < Contract.amount)
+                           .all())
+    display_contracts(not_payed_contracts)
 
 
 def add_contract(contract_datas, client_id, db_session=global_db_session):

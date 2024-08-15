@@ -12,6 +12,21 @@ def get_events(session=global_db_session):
     display_events(events)
 
 
+def get_event_no_support(session=global_db_session):
+
+    events_no_support = (session.query(Event)
+                         .filter(Event.support_id is None).all())
+    display_events(events_no_support)
+
+
+def get_own_events(session=global_db_session):
+
+    own_id = get_employee_id()
+    own_events = (session.query(Event)
+                         .filter(Event.support_id == own_id).all())
+    display_events(own_events)
+
+
 def add_event(event_datas, support_id, db_session=global_db_session):
 
     new_event = Event(contract_id=event_datas['contract_id'],

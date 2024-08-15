@@ -49,10 +49,20 @@ def contract_menu(role):
         options[index] = "list_contracts"
         index += 1
 
+        if role == 2:
+            print(f"[{index}] List not signed contracts")
+            options[index] = "list_not_signed_contracts"
+            index += 1
+
+            print(f"[{index}] List not payed contracts")
+            options[index] = "list_not_payed_contracts"
+            index += 1
+
         if role == 1:
             print(f"[{index}] Add contract")
             options[index] = "add_contract"
             index += 1
+
         if role in [1, 2]:
             print(f"[{index}] Edit contract")
             options[index] = "edit_contract"
@@ -82,7 +92,17 @@ def event_menu(role):
         options[index] = "list_events"
         index += 1
 
-        if role in [2]:
+        if role == 1:
+            print(f"[{index}] List events with no support")
+            options[index] = "list_no_support"
+            index += 1
+
+        if role == 3:
+            print(f"[{index}] List own events")
+            options[index] = "list_own_events"
+            index += 1
+
+        if role == 2:
             print(f"[{index}] Add event")
             options[index] = "add_event"
             index += 1
