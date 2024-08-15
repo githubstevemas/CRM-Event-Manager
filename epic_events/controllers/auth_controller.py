@@ -121,12 +121,12 @@ def create_encrypted_token(employee_email):
     return token
 
 
-def save_token(token):
+def save_token(token, token_path=TOKEN_PATH):
     # With signed token, save it on local
 
     folder = 'tokens'
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    with open(TOKEN_PATH, 'w') as file:
+    with open(token_path, 'w') as file:
         file.write(token)

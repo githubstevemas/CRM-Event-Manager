@@ -10,6 +10,7 @@ def get_events(session=global_db_session):
 
     events = session.query(Event).all()
     display_events(events)
+    input("Type Enter to continue")
 
 
 def get_event_no_support(session=global_db_session):
@@ -17,6 +18,7 @@ def get_event_no_support(session=global_db_session):
     events_no_support = (session.query(Event)
                          .filter(Event.support_id is None).all())
     display_events(events_no_support)
+    input("Type Enter to continue")
 
 
 def get_own_events(session=global_db_session):
@@ -27,13 +29,13 @@ def get_own_events(session=global_db_session):
     display_events(own_events)
 
 
-def add_event(event_datas, support_id, db_session=global_db_session):
+def add_event(event_datas, db_session=global_db_session):
 
     new_event = Event(contract_id=event_datas['contract_id'],
                       client_id=event_datas['client_id'],
                       event_date_start=event_datas['event_date_start'],
                       event_date_end=event_datas['event_date_end'],
-                      support_id=support_id,
+                      support_id=event_datas['support_id'],
                       location=event_datas['location'],
                       attendees=event_datas['attendees'],
                       notes=event_datas['notes'])
@@ -46,17 +48,19 @@ def add_event(event_datas, support_id, db_session=global_db_session):
 
 
 def get_event_datas_to_add():
+    # Get datas from view function and save it in db
 
     event_datas = display_add_event()
-
-    support_id = get_employee_id()
-    add_event(event_datas, support_id)
+    add_event(event_datas)
 
 
 def edit_event():
     # Get old event datas and ask user to edit
 
-    event_to_edit = display_ask_event_to_edit()
+    employee_id = get_employee_id()
+    get_own_events()
+    event_to_edit = display_ask_event_to_edit(employee_id)
+
     choice = display_event_field_to_edit(event_to_edit)
 
     try:

@@ -8,20 +8,20 @@ from epic_events.views.reports import display_employees
 def get_department():
     # Get department user choice
 
-    print("Select department number :\n")
-    print("[1] Management")
-    print("[2] Commercial")
-    print("[3] Support")
-    choice = input("\nYour choice ? ")
-    if choice == '1':
-        return "1"
-    elif choice == '2':
-        return "2"
-    elif choice == '3':
-        return "3"
-    else:
-        print("Invalid choice. Please try again.")
-        return get_department()
+    while True:
+        print("\nSelect department number :\n")
+        print("[1] Management")
+        print("[2] Commercial")
+        print("[3] Support")
+        choice = input("\nYour choice ? ")
+        if choice == '1':
+            return "1"
+        elif choice == '2':
+            return "2"
+        elif choice == '3':
+            return "3"
+        else:
+            print("Invalid choice.")
 
 
 def display_add_employee():
@@ -66,33 +66,31 @@ def display_add_employee():
     return new_employee
 
 
-def display_ask_employee_to_edit():
+def display_ask_employee_to_edit(session=global_db_session):
 
     while True:
-        try:
-            print("\nSelect employee id to edit. "
-                  "Type 'list' to show all employees")
-            choice = input("Your choice ? ")
 
-            if choice == "list":
-                employees_list = global_db_session.query(Employee).all()
-                display_employees(employees_list)
-            else:
-                try:
-                    employee = get_employee_datas(choice)
-                    alright = input(
-                        f"Employee {employee.first_name} "
-                        f"{employee.last_name} ? y/n: ")
-                    if alright == "y":
-                        break
+        print("\nSelect employee id to edit. "
+              "Type 'list' to show all employees")
+        choice = input("Your choice ? ")
 
-                except ValueError:
-                    print("Wrong answer.")
+        if choice == "list":
+            employees_list = session.query(Employee).all()
+            display_employees(employees_list)
+        else:
+            try:
+                employee = get_employee_datas(choice)
+                alright = input(
+                    f"Employee {employee.first_name} "
+                    f"{employee.last_name} ? y/n: ")
+                if alright == "y":
+                    break
 
-        except ValueError:
-            print("Invalid id.")
-        except AttributeError:
-            print("Employee not found.")
+            except ValueError:
+                print("Wrong answer.")
+
+            except AttributeError:
+                print("Employee not found.")
 
     return employee
 

@@ -12,12 +12,25 @@ from epic_events.views.reports import display_employees
 ph = PasswordHasher()
 
 
-def get_employees():
-    employees = global_db_session.query(Employee).all()
+def get_employees(session=global_db_session):
+
+    employees = session.query(Employee).all()
     display_employees(employees)
+    input("Type Enter to continue")
+
+
+def get_support_employees():
+    # Get employees with Support role
+
+    support_employees = (global_db_session.query(Employee)
+                         .filter(Employee.role_id == 3)
+                         .all())
+    display_employees(support_employees)
+    input("Type Enter to continue")
 
 
 def add_employee():
+
     new_employee = display_add_employee()
     register_employee(new_employee)
 

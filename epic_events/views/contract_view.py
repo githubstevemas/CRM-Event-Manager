@@ -6,6 +6,7 @@ from epic_events.views.reports import display_contracts
 
 
 def display_add_contract():
+
     while True:
         try:
             client_id = int(input("Client id? "))
@@ -44,35 +45,31 @@ def display_add_contract():
     return contract_datas
 
 
-def display_ask_contract_to_edit():
+def display_ask_contract_to_edit(session=global_db_session):
 
     while True:
-        try:
-            print("\nSelect contract reference to edit. "
-                  "Type 'list' to show all contracts")
-            choice = input("Your choice ? ")
 
-            if choice == "list":
-                contracts_list = global_db_session.query(Contract).all()
-                display_contracts(contracts_list)
-            else:
-                try:
-                    # Est ce que le contrat.commercial_id.id == employee.id
+        print("\nSelect contract reference to edit. "
+              "Type 'list' to show all contracts")
+        choice = input("Your choice ? ")
 
-                    contract = get_contract_datas(choice)
-                    alright = input(
-                        f"Contract {contract.client.first_name} "
-                        f"{contract.client.last_name} ? y/n: ")
-                    if alright == "y":
-                        break
+        if choice == "list":
+            contracts_list = session.query(Contract).all()
+            display_contracts(contracts_list)
+        else:
+            try:
+                contract = get_contract_datas(choice)
+                alright = input(
+                    f"Contract {contract.client.first_name} "
+                    f"{contract.client.last_name} ? y/n: ")
+                if alright == "y":
+                    break
 
-                except ValueError:
-                    print("Wrong answer.")
+            except ValueError:
+                print("Wrong answer.")
 
-        except ValueError:
-            print("Invalid id.")
-        except AttributeError:
-            print("Employee not found.")
+            except AttributeError:
+                print("Employee not found.")
 
     return contract
 
@@ -82,7 +79,8 @@ def display_contract_field_to_edit(contract_to_edit):
     print("\nCurrent information:")
     print(f"[1] Amount: {contract_to_edit.amount}")
     print(f"[2] Left to pay: {contract_to_edit.left_to_pay}")
-    print(f"[3] Status: {"Signed" if contract_to_edit.status else "Not signed"}")
+    print(f"[3] Status: "
+          f"{"Signed" if contract_to_edit.status else "Not signed"}")
     choice = int(input("\nWhich field to edit ? "))
 
     return choice

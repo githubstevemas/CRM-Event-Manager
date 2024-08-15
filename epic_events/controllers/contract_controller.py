@@ -1,7 +1,8 @@
 import sentry_sdk
 
 from config.config import global_db_session
-from epic_events.controllers.validators import get_client_datas
+from epic_events.controllers.validators import get_client_datas, \
+    get_employee_id
 
 from epic_events.models import Contract
 from epic_events.views.contract_view import display_add_contract, \
@@ -9,10 +10,23 @@ from epic_events.views.contract_view import display_add_contract, \
 from epic_events.views.reports import display_contracts
 
 
-def get_contracts(db_session=global_db_session):
+def get_contracts(session=global_db_session):
+    # Get all contracts
 
-    contracts = db_session.query(Contract).all()
+    contracts = session.query(Contract).all()
     display_contracts(contracts)
+    input("Type Enter to continue")
+
+
+def get_own_not_signed_contracts(session=global_db_session):
+    # Get not signed contracts from curent user
+
+    own_id = get_employee_id()
+    own_signed_contracts = (session.query(Contract)
+                            .filter(Contract.commercial_id == own_id)
+                            .filter(Contract.status.is_(False))
+                            .all())
+    display_contracts(own_signed_contracts)
 
 
 def get_not_signed_contracts(db_session=global_db_session):
@@ -31,6 +45,7 @@ def get_not_payed_contracts(db_session=global_db_session):
 
 
 def add_contract(contract_datas, client_id, db_session=global_db_session):
+
     client = get_client_datas(client_id)
 
     try:
@@ -50,6 +65,8 @@ def add_contract(contract_datas, client_id, db_session=global_db_session):
 
 
 def get_contract_datas_to_add():
+    # Get datas from view function and get it to save in db
+
     contract_datas = display_add_contract()
     client_id = contract_datas['client_id']
 

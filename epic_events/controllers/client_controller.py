@@ -9,6 +9,16 @@ from epic_events.views.reports import display_clients
 def get_clients(session=global_db_session):
     clients = session.query(Client).all()
     display_clients(clients)
+    input("Type Enter to continue")
+
+
+def get_own_clients(session=global_db_session):
+
+    employee_id = get_employee_id()
+    own_clients = (session.query(Client)
+                   .filter(Client.commercial_id == employee_id)
+                   .all())
+    display_clients(own_clients)
 
 
 def add_client(client_datas, commercial_id, db_session=global_db_session):
@@ -40,7 +50,10 @@ def get_client_datas_to_add():
 def edit_client():
     # get old client datas and ask user to edit
 
-    client_to_edit = display_ask_client_to_edit()
+    get_own_clients()
+    employee_id = get_employee_id()
+
+    client_to_edit = display_ask_client_to_edit(employee_id)
     choice = display_client_field_to_edit(client_to_edit)
 
     try:

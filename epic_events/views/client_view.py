@@ -1,11 +1,9 @@
-from config.config import global_db_session
 from epic_events.controllers.validators import validate_email_adress, \
     get_client_datas
-from epic_events.models import Client
-from epic_events.views.reports import display_clients
 
 
 def display_add_client():
+
     first_name = input("First name ? ").lower()
     last_name = input("Last name ? ").lower()
     while True:
@@ -29,33 +27,28 @@ def display_add_client():
     return client_datas
 
 
-def display_ask_client_to_edit():
+def display_ask_client_to_edit(employee_id):
 
     while True:
+
+        print("\nSelect client id to edit.")
+        choice = input("Your choice ? ")
+
         try:
-            print("\nSelect client id to edit. "
-                  "Type 'list' to show all clients")
-            choice = input("Your choice ? ")
-
-            if choice == "list":
-                clients_list = global_db_session.query(Client).all()
-                display_clients(clients_list)
+            client = get_client_datas(int(choice))
+            print(client.first_name)
+            if client.commercial_id == employee_id:
+                alright = input(
+                    f"Client {client.first_name} "
+                    f"{client.last_name} ? y/n: ")
+                if alright == "y":
+                    break
             else:
-                try:
-                    # Est ce que le client.commercial_id == employee.id
-
-                    client = get_client_datas(choice)
-                    alright = input(
-                        f"Employee {client.first_name} "
-                        f"{client.last_name} ? y/n: ")
-                    if alright == "y":
-                        break
-
-                except ValueError:
-                    print("Wrong answer.")
+                print("Wrong answer.")
 
         except ValueError:
-            print("Invalid id.")
+            print("Wrong answer.")
+
         except AttributeError:
             print("Employee not found.")
 

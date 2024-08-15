@@ -7,15 +7,16 @@ from epic_events.models.employee import Employee
 TOKEN_PATH = 'tokens/token.txt'
 
 
-def load_token():
+def load_token(token_path=TOKEN_PATH):
     # Load token from local txt and return it
 
-    with open('tokens/token.txt', 'r') as file:
+    with open(token_path, 'r') as file:
         token = file.read()
     return token
 
 
 def verify_token(path=TOKEN_PATH):
+
     with open(path) as file:
         token = file.read()
 
@@ -25,8 +26,10 @@ def verify_token(path=TOKEN_PATH):
         payload = jwt.decode(token, public_key, algorithms=["RS256"])
         return payload
     except jwt.ExpiredSignatureError:
+        print("Old token.")
         return False
     except jwt.InvalidTokenError:
+        print("Wrong token.")
         return False
 
 

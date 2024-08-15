@@ -25,7 +25,6 @@ def display_employees(employees_list):
         )
 
     console.print(table)
-    input("Type Enter to continue")
 
 
 def display_clients(clients_list):
@@ -53,7 +52,6 @@ def display_clients(clients_list):
         )
 
     console.print(table)
-    input("Type Enter to continue")
 
 
 def display_contracts(contracts_list):
@@ -79,7 +77,6 @@ def display_contracts(contracts_list):
         )
 
     console.print(table)
-    input("Type Enter to continue")
 
 
 def display_events(events_list):
@@ -107,4 +104,3 @@ def display_events(events_list):
         )
 
     console.print(table)
-    input("Type Enter to continue")

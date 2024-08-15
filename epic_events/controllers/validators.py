@@ -12,7 +12,6 @@ from epic_events.models import Employee, Client, Contract, Event
 def validate_password(password):
 
     schema = PasswordValidator()
-
     schema \
         .min(8) \
         .max(100) \
@@ -54,7 +53,7 @@ def validate_datetime(user_input):
 
 
 def get_employee_id():
-
+    # Get paylod token of current user and return his Id
     payload = verify_token()
     if payload:
         employee = session.query(Employee).filter_by(

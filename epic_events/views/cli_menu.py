@@ -14,7 +14,10 @@ def display_main_menu():
 
 
 def client_menu(role):
-    # List clients to all users, add/edit only to commercials
+    """
+    List clients to all users,
+    add/edit to commercials only
+    """
 
     while True:
 
@@ -36,7 +39,11 @@ def client_menu(role):
 
 
 def contract_menu(role):
-    # List contracts to all users, add to managers, edit to managers/support
+    """
+    List contracts to all users,
+    add to managers only,
+    edit to managers/support only
+    """
 
     while True:
 
@@ -79,7 +86,11 @@ def contract_menu(role):
 
 
 def event_menu(role):
-    # List events to all users, add to commercials, edit to support/management
+    """
+    List events to all users,
+    add to commercials only,
+    edit to support/management only
+    """
 
     while True:
 
@@ -123,7 +134,10 @@ def event_menu(role):
 
 
 def employee_menu(role):
-    # List employees to all users, add/edit to managers
+    """
+    List employees to all users,
+    add/edit to managers only
+    """
 
     while True:
         print("\nEmployee menu :\n\n")
