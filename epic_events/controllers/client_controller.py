@@ -23,7 +23,8 @@ def add_client(client_datas, commercial_id, db_session=global_db_session):
 
         db_session.add(new_client)
         db_session.commit()
-        print("Client successfully added.")
+        print("\nClient successfully added.")
+        input("Type Enter to continue")
 
     except Exception as e:
         print(f"Error while adding client: {e}")
@@ -57,7 +58,8 @@ def edit_client():
             print("Invalid choice.")
 
         global_db_session.commit()
-        print("Client updated successfully.")
+        print("\nClient updated successfully.")
+        input("Type Enter to continue")
 
     except Exception as e:
         global_db_session.rollback()

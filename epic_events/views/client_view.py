@@ -42,6 +42,8 @@ def display_ask_client_to_edit():
                 display_clients(clients_list)
             else:
                 try:
+                    # Est ce que le client.commercial_id == employee.id
+
                     client = get_client_datas(choice)
                     alright = input(
                         f"Employee {client.first_name} "

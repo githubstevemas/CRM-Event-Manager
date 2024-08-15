@@ -25,7 +25,8 @@ def add_employee():
                                f" {new_employee['last_name_name']}"
                                "successfully added.")
 
-    print("Employee successfully added.")
+    print("\nEmployee successfully added.")
+    input("Type Enter to continue")
 
 
 def edit_employee():
@@ -49,10 +50,12 @@ def edit_employee():
             print("Invalid choice.")
 
         global_db_session.commit()
-        print("Employee updated successfully.")
+        print("\nEmployee updated successfully.")
         sentry_sdk.capture_message(f"Employee {employee_to_edit.first_name}"
                                    " {employee_to_edit.last_name_name}"
                                    "successfully edited.")
+
+        input("Type Enter to continue")
 
     except Exception as e:
         global_db_session.rollback()

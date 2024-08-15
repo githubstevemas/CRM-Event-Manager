@@ -71,6 +71,7 @@ def display_ask_event_to_edit():
                 display_events(events_list)
             else:
                 try:
+                    # est ce que l event.support_id == employee.id
                     event = get_event_datas(choice)
                     alright = input(
                         f"Event for {event.client.first_name} "

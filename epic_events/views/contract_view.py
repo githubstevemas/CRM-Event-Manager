@@ -57,6 +57,8 @@ def display_ask_contract_to_edit():
                 display_contracts(contracts_list)
             else:
                 try:
+                    # Est ce que le contrat.commercial_id.id == employee.id
+
                     contract = get_contract_datas(choice)
                     alright = input(
                         f"Contract {contract.client.first_name} "
@@ -80,7 +82,7 @@ def display_contract_field_to_edit(contract_to_edit):
     print("\nCurrent information:")
     print(f"[1] Amount: {contract_to_edit.amount}")
     print(f"[2] Left to pay: {contract_to_edit.left_to_pay}")
-    print(f"[3] Status: {contract_to_edit.status}")
+    print(f"[3] Status: {"Signed" if contract_to_edit.status else "Not signed"}")
     choice = int(input("\nWhich field to edit ? "))
 
     return choice

@@ -26,7 +26,8 @@ def add_event(event_datas, support_id, db_session=global_db_session):
     # Add new_event to the db
     db_session.add(new_event)
     db_session.commit()
-    print("Event successfully added.")
+    print("\nEvent successfully added.")
+    input("Type Enter to continue")
 
 
 def get_event_datas_to_add():
@@ -58,7 +59,8 @@ def edit_event():
             print("Invalid choice.")
 
         global_db_session.commit()
-        print("Event updated successfully.")
+        print("\nEvent updated successfully.")
+        input("Type Enter to continue")
 
     except Exception as e:
         global_db_session.rollback()
