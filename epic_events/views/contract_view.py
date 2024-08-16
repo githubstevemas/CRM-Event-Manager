@@ -1,8 +1,6 @@
 from config.config import global_db_session
 from epic_events.controllers.validators import get_client_datas, \
     get_contract_datas, is_numeric
-from epic_events.models import Contract, Client
-from epic_events.views.reports import display_contracts, display_clients
 
 
 def display_add_contract(session=global_db_session):

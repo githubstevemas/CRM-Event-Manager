@@ -25,6 +25,7 @@ def main_menu():
         if choice == "666":
 
             result = 10 / 0
+            print(result)
 
         if choice == "1":
             # Check permissions token to display client menu

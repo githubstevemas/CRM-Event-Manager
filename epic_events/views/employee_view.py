@@ -2,7 +2,6 @@ from config.config import global_db_session
 from epic_events.controllers.validators import get_employee_datas, \
     validate_email_adress, validate_password
 from epic_events.models import Employee
-from epic_events.views.reports import display_employees
 
 
 def get_department():
@@ -66,7 +65,7 @@ def display_add_employee():
     return new_employee
 
 
-def display_ask_employee_to_edit(session=global_db_session):
+def display_ask_employee_to_edit():
 
     while True:
 

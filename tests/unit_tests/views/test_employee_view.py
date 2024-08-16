@@ -29,7 +29,8 @@ def test_display_employees(db_session, insert_test_employee, capsys):
 
 def test_display_add_employee(db_session, capsys):
 
-    with patch('epic_events.views.employee_view.get_department', return_value="2"):
+    with patch('epic_events.views.employee_view.get_department',
+               return_value="2"):
         with patch('builtins.input', side_effect=['dan',
                                                   'willis',
                                                   'Password@123',
@@ -45,6 +46,6 @@ def test_display_ask_employee_to_edit(db_session, capsys):
 
     with patch('builtins.input', side_effect=['1', 'y']):
 
-        employee_to_edit = display_ask_employee_to_edit(db_session)
+        employee_to_edit = display_ask_employee_to_edit()
 
         assert employee_to_edit.first_name == "michael"
