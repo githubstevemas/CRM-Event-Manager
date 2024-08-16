@@ -118,9 +118,14 @@ def event_menu(role):
             options[index] = "add_event"
             index += 1
 
-        if role in [1, 3]:
+        if role == 3:
             print(f"[{index}] Edit event")
             options[index] = "edit_event"
+            index += 1
+
+        if role == 1:
+            print(f"[{index}] Edit event support")
+            options[index] = "edit_event_support"
             index += 1
 
         print("[0] Return")

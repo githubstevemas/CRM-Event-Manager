@@ -32,11 +32,12 @@ def display_ask_client_to_edit(employee_id):
     while True:
 
         print("\nSelect client id to edit.")
-        choice = input("Your choice ? ")
+        choice = input("Your choice ? (type '0' to go back) ")
+        if choice == "0":
+            return None
 
         try:
             client = get_client_datas(int(choice))
-            print(client.first_name)
             if client.commercial_id == employee_id:
                 alright = input(
                     f"Client {client.first_name} "
@@ -50,7 +51,7 @@ def display_ask_client_to_edit(employee_id):
             print("Wrong answer.")
 
         except AttributeError:
-            print("Employee not found.")
+            print("Client not found.")
 
     return client
 

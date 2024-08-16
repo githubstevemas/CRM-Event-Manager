@@ -70,13 +70,11 @@ def display_ask_employee_to_edit(session=global_db_session):
 
     while True:
 
-        print("\nSelect employee id to edit. "
-              "Type 'list' to show all employees")
-        choice = input("Your choice ? ")
+        print("\nSelect employee id to edit.")
+        choice = input("Your choice ? (type '0' to go back) ")
+        if choice == "0":
+            return None
 
-        if choice == "list":
-            employees_list = session.query(Employee).all()
-            display_employees(employees_list)
         else:
             try:
                 employee = get_employee_datas(choice)

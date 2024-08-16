@@ -24,7 +24,7 @@ def test_add_client(db_session, test_engine):
 
 def test_get_clients(db_session, capsys):
 
-    with patch('builtins.input', return_value='0'):
+    with patch('builtins.input', return_value=''):
         get_clients(db_session)
         captured = capsys.readouterr()
 

@@ -5,6 +5,7 @@ console = Console()
 
 
 def display_employees(employees_list):
+
     table = Table(title="Employees")
 
     table.add_column("Id", justify="center", style="cyan")
@@ -28,6 +29,7 @@ def display_employees(employees_list):
 
 
 def display_clients(clients_list):
+
     table = Table(title="Clients")
 
     table.add_column("Id", justify="center", style="cyan")
@@ -47,7 +49,7 @@ def display_clients(clients_list):
             client.email,
             client.phone,
             client.company_name,
-            str(client.first_contact),
+            client.first_contact.strftime("%Y-%m-%d"),
             client.commercial.last_name
         )
 
@@ -55,6 +57,7 @@ def display_clients(clients_list):
 
 
 def display_contracts(contracts_list):
+
     table = Table(title="Contracts")
 
     table.add_column("Reference", justify="center", style="cyan")
@@ -63,6 +66,7 @@ def display_contracts(contracts_list):
     table.add_column("Amount", justify="right", style="cyan")
     table.add_column("Left to Pay", justify="right", style="cyan")
     table.add_column("Creation", justify="center", style="cyan")
+    table.add_column("Update", justify="center", style="cyan")
     table.add_column("Status", justify="center", style="cyan")
 
     for contract in contracts_list:
@@ -70,9 +74,11 @@ def display_contracts(contracts_list):
             str(contract.id),
             contract.client.last_name,
             contract.commercial.last_name,
-            f"${contract.amount:,.2f}",
-            f"${contract.left_to_pay:,.2f}",
-            str(contract.contract_creation_date),
+            f"$ {contract.amount:,.2f}",
+            f"$ {contract.left_to_pay:,.2f}",
+            contract.contract_creation_date.strftime("%Y-%m-%d %H:%M"),
+            contract.contract_update_date.strftime(
+                "%Y-%m-%d %H:%M") if contract.contract_update_date else "N/A",
             "Signed" if contract.status else "Not signed"
         )
 
@@ -80,6 +86,7 @@ def display_contracts(contracts_list):
 
 
 def display_events(events_list):
+
     table = Table(title="Events")
 
     table.add_column("Reference", justify="center", style="cyan")
@@ -93,7 +100,7 @@ def display_events(events_list):
 
     for event in events_list:
         table.add_row(
-            str(event.contract_id),
+            str(event.id),
             event.client.last_name,
             str(event.event_date_start),
             str(event.event_date_end),

@@ -15,6 +15,7 @@ class Contract(Base):
     amount = Column(Numeric, nullable=False)
     left_to_pay = Column(Numeric, nullable=False)
     contract_creation_date = Column(DateTime, default=datetime.now)
+    contract_update_date = Column(DateTime)
     status = Column(Boolean, default=False)
 
     client = relationship('Client', back_populates='contracts')

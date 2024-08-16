@@ -26,7 +26,6 @@ def get_support_employees():
                          .filter(Employee.role_id == 3)
                          .all())
     display_employees(support_employees)
-    input("Type Enter to continue")
 
 
 def add_employee():
@@ -35,17 +34,23 @@ def add_employee():
     register_employee(new_employee)
 
     sentry_sdk.capture_message(f"Employee {new_employee['first_name']}"
-                               f" {new_employee['last_name_name']}"
+                               f" {new_employee['last_name']}"
                                "successfully added.")
 
     print("\nEmployee successfully added.")
     input("Type Enter to continue")
 
 
-def edit_employee():
+def edit_employee(session=global_db_session):
     # Get old employee datas and ask user to edit
 
+    employees_list = session.query(Employee).all()
+    display_employees(employees_list)
+
     employee_to_edit = display_ask_employee_to_edit()
+    if employee_to_edit is None:
+        return
+
     choice = display_employee_field_to_edit(employee_to_edit)
 
     try:

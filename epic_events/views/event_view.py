@@ -67,7 +67,7 @@ def get_valid_support_id():
 
     while True:
         get_support_employees()
-        support_id = input("Support employee Id? (Type '0' to skip): ")
+        support_id = input("\nSupport employee Id? (type '0' to skip): ")
         if support_id == "0":
             return None
         elif is_numeric(support_id):
@@ -102,12 +102,40 @@ def get_valid_attendees():
             print("Must be numeric.")
 
 
+def display_ask_event_support_to_edit():
+
+    while True:
+
+        print("\nSelect event reference to edit.")
+        choice = input("Your choice ? (type '0' to go back) ")
+        if choice == "0":
+            return None
+
+        try:
+            event = get_event_datas(int(choice))
+            alright = input(
+                f"Event for {event.client.first_name} "
+                f"{event.client.last_name} ? y/n: ")
+            if alright == "y":
+                break
+
+        except ValueError:
+            print("Wrong answer.")
+
+        except AttributeError:
+            print("Event not found.")
+
+    return event
+
+
 def display_ask_event_to_edit(employee_id):
 
     while True:
 
         print("\nSelect event reference to edit.")
-        choice = input("Your choice ? ")
+        choice = input("Your choice ? (type '0' to go back) ")
+        if choice == "0":
+            return None
 
         try:
             event = get_event_datas(int(choice))

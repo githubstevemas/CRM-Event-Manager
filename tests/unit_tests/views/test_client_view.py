@@ -9,7 +9,8 @@ def test_display_clients(db_session, insert_test_client, capsys):
 
     insert_test_client(first_name="Brandon", last_name="Daniels",
                        email="brandon@exemple.com", phone="1234567890",
-                       company_name="Coca-Cola", commercial_id=2)
+                       company_name="Coca-Cola",
+                       first_contact="2024-08-12 15:30:12", commercial_id=2)
 
     clients = db_session.query(Client).all()
 

@@ -1,17 +1,18 @@
+import datetime
+
 import sentry_sdk
 
 from config.config import global_db_session
 from epic_events.controllers.validators import get_client_datas, \
     get_employee_id
 
-from epic_events.models import Contract
+from epic_events.models import Contract, Client
 from epic_events.views.contract_view import display_add_contract, \
     display_ask_contract_to_edit, display_contract_field_to_edit
-from epic_events.views.reports import display_contracts
+from epic_events.views.reports import display_contracts, display_clients
 
 
 def get_contracts(session=global_db_session):
-    # Get all contracts
 
     contracts = session.query(Contract).all()
     display_contracts(contracts)
@@ -64,19 +65,27 @@ def add_contract(contract_datas, client_id, db_session=global_db_session):
         print(f"\nError while adding contract: {e}")
 
 
-def get_contract_datas_to_add():
+def get_contract_datas_to_add(session=global_db_session):
     # Get datas from view function and get it to save in db
 
+    clients_list = session.query(Client).all()
+    display_clients(clients_list)
     contract_datas = display_add_contract()
     client_id = contract_datas['client_id']
 
     add_contract(contract_datas, client_id)
 
 
-def edit_contract():
+def edit_contract(session=global_db_session):
     # Get contract old contract datas and ask user to edit
 
+    contracts_list = session.query(Contract).all()
+    display_contracts(contracts_list)
+
     contract_to_edit = display_ask_contract_to_edit()
+    if contract_to_edit is None:
+        return
+
     choice = display_contract_field_to_edit(contract_to_edit)
 
     try:
@@ -90,6 +99,7 @@ def edit_contract():
         else:
             print("Invalid choice.")
 
+        contract_to_edit.contract_update_date = datetime.datetime.now()
         global_db_session.commit()
         print("\nContract updated successfully.")
         input("Type Enter to continue")

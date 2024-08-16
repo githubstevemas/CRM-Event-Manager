@@ -29,14 +29,14 @@ def test_display_employees(db_session, insert_test_employee, capsys):
 
 def test_display_add_employee(db_session, capsys):
 
-    with patch('builtins.input', side_effect=['dan',
-                                              'willis',
-                                              'Password@123',
-                                              'dan@exemple.com',
-                                              '123456789',
-                                              '3']):
+    with patch('epic_events.views.employee_view.get_department', return_value="2"):
+        with patch('builtins.input', side_effect=['dan',
+                                                  'willis',
+                                                  'Password@123',
+                                                  'dan@exemple.com',
+                                                  '123456789']):
 
-        new_test_employee = display_add_employee()
+            new_test_employee = display_add_employee()
 
         assert new_test_employee['first_name'] == 'dan'
 

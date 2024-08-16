@@ -1,11 +1,15 @@
 import argparse
+import os
+
+import sentry_sdk
 
 from epic_events.controllers.menu_controller import main_menu
 from epic_events.controllers.auth_controller import main_login
 
-"""sentry_sdk.init(
-    dsn=os.getenv("SENTRY_DSN"), "733440.ingest.de.sentry.io/4507747431809104",
-    traces_sample_rate=1.0, profiles_sample_rate=1.0)"""
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN"),
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0)
 
 
 def main():

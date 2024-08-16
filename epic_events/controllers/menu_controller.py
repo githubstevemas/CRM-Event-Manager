@@ -7,7 +7,8 @@ from epic_events.controllers.contract_controller import get_contracts, \
 from epic_events.controllers.employee_controller import get_employees, \
     add_employee, edit_employee
 from epic_events.controllers.event_controller import get_events, \
-    edit_event, get_event_datas_to_add, get_event_no_support, get_own_events
+    edit_event, get_event_datas_to_add, get_event_no_support, get_own_events, \
+    edit_event_support
 from epic_events.controllers.permission_controller import verify_token, \
     verify_role
 from epic_events.views.cli_menu import (display_main_menu,
@@ -21,9 +22,9 @@ def main_menu():
     while True:
         choice = display_main_menu()
 
-        if choice == "999":
+        if choice == "666":
 
-            add_employee()
+            result = 10 / 0
 
         if choice == "1":
             # Check permissions token to display client menu
@@ -83,6 +84,8 @@ def main_menu():
                     get_event_datas_to_add()
                 elif event_choice == "edit_event":
                     edit_event()
+                elif event_choice == "edit_event_support":
+                    edit_event_support()
                 elif event_choice == "0":
                     main_menu()
             else:

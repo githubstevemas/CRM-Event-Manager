@@ -64,7 +64,7 @@ def insert_test_employee(db_session):
 @pytest.fixture()
 def insert_test_client(db_session):
     def insert(first_name, last_name, email, phone, company_name,
-               commercial_id):
+               first_contact, commercial_id):
         db_session.execute(
             text(
                 "INSERT INTO client ("
@@ -73,6 +73,7 @@ def insert_test_client(db_session):
                 "email, "
                 "phone, "
                 "company_name, "
+                "first_contact, "
                 "commercial_id) "
                 "VALUES ("
                 ":first_name, "
@@ -80,10 +81,11 @@ def insert_test_client(db_session):
                 ":email, "
                 ":phone, "
                 ":company_name, "
+                ":first_contact, "
                 ":commercial_id)"),
-            {"first_name": first_name, "last_name": last_name, "email": email,
-             "phone": phone,
-             "company_name": company_name, "commercial_id": commercial_id}
+            {"first_name": first_name, "last_name": last_name,
+             "email": email, "phone": phone, "company_name": company_name,
+             "first_contact": first_contact, "commercial_id": commercial_id}
         )
         db_session.commit()
 
