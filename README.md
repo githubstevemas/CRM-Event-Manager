@@ -28,6 +28,14 @@ Python-based application designed to manage clients, events, and employees for y
 ## How to run
 Once the code has been downloaded, go to the project directory and enter the following commands in terminal
 
+*install a new vitual environement :*
+```
+python -m venv env
+```
+*activate the environement :*
+```
+env/Scripts/activate
+``` 
 *install all the depedencies :*
 ```
 pip install -r requirements.txt
